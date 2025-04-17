@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar with Hamburger Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for Navbar */
+        .nav-link {
+            color: #gray-700;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-medium;
+        }
+
+        .nav-link:hover {
+            color: #purple-600;
+        }
+
+        .active {
+            color: #purple-600;
+        }
+
+        #hamburger-btn {
+            display: none; /* Hide by default on larger screens */
+            background: none;
+            border: none;
+            color: #gray-700;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 24px;
+            outline: none;
+        }
+
+        #close-menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 24px;
+            outline: none;
+        }
+
+        #mobile-menu {
+            display: none; /* Hide by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 50;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #mobile-menu-content {
+            background-color: #gray-800;
+            width: 80%;
+            max-width: 320px;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        #mobile-menu nav {
+            display: block;
+        }
+
+        #mobile-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            space-y: 20px;
+        }
+
+        #mobile-menu li {
+            margin-bottom: 0;
+        }
+
+        #mobile-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        #mobile-menu a:hover {
+            color: #purple-300;
+        }
+
+        /* Media query for mobile devices */
+        @media (max-width: 768px) {
+            .hidden {
+                display: none;
+            }
+            .md\:block {
+                display: none !important; /* Hide desktop nav on mobile */
+            }
+
+            #hamburger-btn {
+                display: block; /* Show hamburger button on mobile */
+            }
+
+            #mobile-menu {
+                display: none; /* Will be shown by JS when hamburger is clicked */
+            }
+        }
+    </style>
+</head>
+<body class="font-poppins bg-gray-100">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-blue-500 focus:text-white focus:p-2 focus:rounded-md">Skip to main content</a>
+
+    <header class="sticky top-0 z-50 bg-white bg-opacity-90 backdrop-blur-md shadow-md py-2" role="banner">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-indigo-600" aria-label="BoostDigital Homepage">
+                <span class="text-purple-600">Boost</span>Digital
+            </a>
+            <nav class="hidden md:block" role="navigation">
+                <ul class="flex space-x-6">
+                    <li><a href="#home" class="nav-link text-gray-700 hover:text-purple-600 transition duration-300 font-medium">Home</a></li>
+                    <li><a href="#services" class="nav-link text-gray-700 hover:text-purple-600 transition duration-300 font-medium">Services</a></li>
+                    <li><a href="#testimonials" class="nav-link text-gray-700 hover:text-purple-600 transition duration-300 font-medium">Testimonials</a></li>
+                    <li><a href="#pricing" class="nav-link text-gray-700 hover:text-purple-600 transition duration-300 font-medium">Pricing</a></li>
+                    <li><a href="#contact" class="nav-link text-gray-700 hover:text-purple-600 transition duration-300 font-medium">Contact</a></li>
+                </ul>
+            </nav>
+            <button id="hamburger-btn" class="md:hidden text-gray-700 focus:outline-none" aria-label="Toggle Navigation">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="hidden" aria-hidden="true">
+        <div id="mobile-menu-content">
+            <div class="flex justify-end mb-4">
+                <button id="close-menu-btn" class="text-white focus:outline-none" aria-label="Close Menu">
+                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <nav class="block" role="navigation">
+                <ul class="space-y-4">
+                    <li><a href="#home" class="block text-lg text-white hover:text-purple-300 transition duration-300 font-medium">Home</a></li>
+                    <li><a href="#services" class="block text-lg text-white hover:text-purple-300 transition duration-300 font-medium">Services</a></li>
+                    <li><a href="#testimonials" class="block text-lg text-white hover:text-purple-300 transition duration-300 font-medium">Testimonials</a></li>
+                    <li><a href="#pricing" class="block text-lg text-white hover:text-purple-300 transition duration-300 font-medium">Pricing</a></li>
+                    <li><a href="#contact" class="block text-lg text-white hover:text-purple-300 transition duration-300 font-medium">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <main id="main-content" role="main">
+        <section id="home" class="page-section text-center relative overflow-hidden">
+            <div class="container">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                    Elevate Your Brand with <span class="text-purple-300">BoostDigital</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-200 mb-8">
+                    We are a digital marketing agency dedicated to helping businesses thrive online.
+                </p>
+                <a href="#contact" class="inline-block bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 px-8 rounded-full transition duration-300">
+                    Get a Free Consultation
+                </a>
+            </div>
+        </section>
+
+        <section id="services" class="page-section">
+            <div class="container">
+                <h2 class="text-3xl font-semibold text-gray-800 text-center mb-12">Our Services</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="service-card bg-white rounded-lg shadow-md p-6 transition duration-300 fade-in">
+                        <div class="mb-4 text-purple-500">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.381v1.5m7.905-9.036L15 8.643m5.914 8.08l-6.786-6.786M12 20.575v-1.3m0-5.14v-1.3m0-5.14v-1.3m0 5.14l-6.786-6.786M12 20.575l-7.905-9.036m7.905-4.327v1.5M12 6.381l-5.914 8.08" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Search Engine Optimization (SEO)</h3>
+                        <p class="text-gray-600">
+                            Improve your website's visibility and drive organic traffic with our expert SEO strategies.
+                        </p>
+                    </div>
+                    <div class="service-card bg-white rounded-lg shadow-md p-6 transition duration-300 fade-in">
+                        <div class="mb-4 text-purple-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a.75.75 0 00.75.75h16.5a.75.75 0 00.75-.75V4.5a.75.75 0 00-.75-.75H3A.75.75 0 002.25 4.5v10.5zM16.838 9.918v4.573m-16.815-2.297a1.125 1.125 0 011.37-.911l11.59-3.864a1.125 1.125 0 011.37.911l-11.59 3.864a1.125 1.125 0 01-1.37.911l-11.59-3.864z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Social Media Marketing</h3>
+                        <p class="text-gray-600">
+                            Engage your audience, build your brand, and drive results with our social media management services.
+                        </p>
+                    </div>
+                    <div class="service-card bg-white rounded-lg shadow-md p-6 transition duration-300 fade-in">
+                        <div class="mb-4 text-purple-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Pay-Per-Click (PPC) Advertising</h3>
+                        <p class="text-gray-600">
+                            Reach your target audience instantly and maximize your ROI with our PPC advertising campaigns.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="page-section bg-purple-100">
+            <div class="container">
+                <h2 class="text-3xl font-semibold text-gray-800 text-center mb-12">What Our Clients Say</h2>
+                 <div class="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item">
+                            <div class="testimonial-card rounded-lg p-6 fade-in">
+                                <p class="text-gray-700 mb-4 italic">
+                                    "BoostDigital transformed our online presence. Their strategies are effective and their team is a pleasure to work with."
+                                </p>
+                                <p class="font-semibold text-gray-800">- John Smith, CEO of TechCorp</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="testimonial-card rounded-lg p-6 fade-in">
+                                <p class="text-gray-700 mb-4 italic">
+                                    "We've seen a significant increase in leads and sales since partnering with BoostDigital. Highly recommend their services!"
+                                </p>
+                                <p class="font-semibold text-gray-800">- Jane Doe, Marketing Director at FashionHub</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                             <div class="testimonial-card rounded-lg p-6 fade-in">
+                                <p class="text-gray-700 mb-4 italic">
+                                    "Their expertise in SEO and PPC is unmatched. Our website traffic and conversion rates have soared!"
+                                </p>
+                                <p class="font-semibold text-gray-800">- Alex Johnson, Owner of EcomStore</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control prev">❮</button>
+                    <button class="carousel-control next">❯</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="page-section bg-gray-100">
+            <div class="container">
+                <h2 class="text-3xl font-semibold text-gray-800 text-center mb-12">Our Pricing Plans</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="pricing-card bg-white rounded-lg shadow-md p-6 transition duration-300 flex flex-col">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Basic</h3>
+                        <p class="text-gray-600 text-sm mb-4">Ideal for small businesses starting online.</p>
+                        <div class="flex-grow">
+                            <p class="text-4xl font-bold text-purple-600 mb-4">$99<span class="text-lg text-gray-600">/mo</span></p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                                <li>SEO Optimization</li>
+                                <li>Social Media Management (1 platform)</li>
+                                <li>Monthly Reporting</li>
+                            </ul>
+                        </div>
+                        <a href="#contact" class="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-full transition duration-300 text-center">Get Started</a>
+                    </div>
+                    <div class="pricing-card bg-white rounded-lg shadow-md p-6 transition duration-300 flex flex-col">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Standard</h3>
+                        <p class="text-gray-600 text-sm mb-4">For growing businesses seeking more exposure.</p>
+                        <div class="flex-grow">
+                            <p class="text-4xl font-bold text-purple-600 mb-4">$199<span class="text-lg text-gray-600">/mo</span></p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                                <li>Advanced SEO</li>
+                                <li>Social Media Management (up to 3 platforms)</li>
+                                <li>PPC Campaign Setup</li>
+                                <li>Weekly Reporting</li>
+                            </ul>
+                         </div>
+                        <a href="#contact" class="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-full transition duration-300 text-center">Get Started</a>
+                    </div>
+                    <div class="pricing-card bg-white rounded-lg shadow-md p-6 transition duration-300 flex flex-col">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">Premium</h3>
+                        <p class="text-gray-600 text-sm mb-4">Tailored solutions for established enterprises.</p>
+                        <div class="flex-grow">
+                            <p class="text-4xl font-bold text-purple-600 mb-4">Custom</p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                                <li>Comprehensive SEO</li>
+                                <li>Full Social Media Management</li>
+                                <li>Dedicated PPC Manager</li>
+                                <li>Detailed Analytics & Reporting</li>
+                                <li>24/7 Support</li>
+                            </ul>
+                        </div>
+                        <a href="#contact" class="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-full transition duration-300 text-center">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="page-section">
+            <div class="container">
+                <h2 class="text-3xl font-semibold text-gray-800 text-center mb-12">Contact Us</h2>
+                <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6 fade-in">
+                    <form id="contact-form" class="contact-form space-y-4">
+                        <div>
+                            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+                            <input type="text" id="name" name="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Name" required>
+                            <p id="name-error" class="text-red-500 text-xs italic mt-1"></p>
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                            <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Your Email" required>
+                            <p id="email-error" class="text-red-500 text-xs italic mt-1"></p>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Message:</label>
+                            <textarea id="message" name="message" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-32 resize-y" placeholder="Your Message" required></textarea>
+                            <p id="message-error" class="text-red-500 text-xs italic mt-1"></p>
+                        </div>
+                        <button type="submit" class="bg-purple-500 hover:bg-purple-700 text-white font-semibold py-2 px-6 rounded-full transition duration-300 focus:outline-none focus:shadow-outline">
+                            Send Message
+                        </button>
+                        <p id="form-message" class="text-green-500 text-center font-semibold mt-4"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-purple-500 py-12 fade-in">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="text-2xl font-semibold text-white mb-4">Subscribe to Our Newsletter</h2>
+                    <p class="text-gray-200 mb-6">Stay updated with the latest digital marketing trends and news.</p>
+                    <form id="newsletter-form" class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                        <input type="email" id="newsletter-email" name="newsletter-email" class="w-full sm:w-auto max-w-md py-2 px-4 rounded-full text-gray-700 focus:outline-none focus:shadow-outline" placeholder="Enter your email" required>
+                        <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 focus:outline-
